@@ -1,0 +1,22 @@
+{
+  "name": "rapyd-pay-your-partners-in-overseas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GreJerdev/rapyd-pay-your-partners-in-overseas.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GreJerdev/rapyd-pay-your-partners-in-overseas/issues"
+  },
+  "homepage": "https://github.com/GreJerdev/rapyd-pay-your-partners-in-overseas#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

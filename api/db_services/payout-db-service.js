@@ -4,20 +4,20 @@ let ERROR = require('../utilities/errors');
 let provider_factory = require('./provider/datebase-provider-factory');
 let PayoutModel = require('../models/payout');
 
-module.exports = class ExerciseProvider {
+module.exports = class PayoutProvider {
 
     constructor() {
-        this.db_connection = provider_factory('exercise');
+        this.db_connection = provider_factory('payout');
     }
 
-    async createExercise(exercise, conn) {
-        let log_path = 'ExerciseProvider/createPayout -';
+    async createPayout(payout, conn) {
+        let log_path = 'PayoutProvider/createPayout -';
         let is_external_connection = true;
         try {
-            let result = await this.db_connection.create(exercise);
+            let result = await this.db_connection.create(payout);
             logger.verbose(`${log_path} db result - ${result}`);
-            exercise = new PayoutModel(result);
-            return Promise.resolve(exercise);
+            payout = new PayoutModel(result);
+            return Promise.resolve(payout);
         } catch (err) {
             if (is_external_connection === false) {
 
@@ -27,14 +27,14 @@ module.exports = class ExerciseProvider {
         }
     }
 
-    async updatePayout(exercise, conn) {
-        let log_path = 'ExerciseProvider/updatePayout';
+    async updatePayout(payout, conn) {
+        let log_path = 'PayoutProvider/updatePayout';
         let is_external_connection = false;
         try {
             if (!conn) {
 
             }
-            let result = await this.db_connection.update(buy_list, conn);
+            let result = await this.db_connection.update(payout, conn);
             return Promise.resolve(new PayoutModel(result));
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
@@ -43,7 +43,7 @@ module.exports = class ExerciseProvider {
     }
 
     async deleteExercise(id, conn = null) {
-        let log_path = 'ExerciseProvider/delete_exercise';
+        let log_path = 'PayoutProvider/deleteExercise';
         let is_external_connection = false;
         try {
             if (!conn) {
@@ -58,7 +58,7 @@ module.exports = class ExerciseProvider {
     }
 
     async getPayoutById(payout, conn) {
-        let log_path = 'ExerciseProvider/getPayoutById';
+        let log_path = 'PayoutProvider/getPayoutById';
         let exercise = new Exercise();
 
         try {
@@ -77,7 +77,7 @@ module.exports = class ExerciseProvider {
     }
 
     async getPayoutList(search_by, order_by, page_number, page_size, limit, conn) {
-        let log_path = 'exercise-provider/getPayoutList';
+        let log_path = 'PayoutProvider/getPayoutList';
         try {
             let result = await this.db_connection.getList(search_by, order_by, page_number, page_size, limit, conn);
             return Promise.resolve(result);

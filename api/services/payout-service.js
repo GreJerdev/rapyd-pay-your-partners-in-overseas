@@ -20,7 +20,7 @@ module.exports = class PayoutService {
             payout.create_at = new Date().getTime();
             logger.verbose(`${method_name} - parameter - payout - ${payout}`);
             logger.verbose(`${method_name} - calling buyListDBProvider/createPayout`);
-            payout = await this.db_provider.createExercise(payout);
+            payout = await this.db_provider.createPayout(payout);
             logger.info(`${method_name} - end`);
             return Promise.resolve(payout);
         } catch (err) {

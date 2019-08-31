@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require( "./api/configuration/config");
+const config = require( "./configuration/config");
 //const db = require("./providers/database/mysql_provider");
 require("./api/utilities/logger");
 

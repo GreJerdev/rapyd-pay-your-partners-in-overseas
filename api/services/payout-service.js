@@ -1,56 +1,56 @@
-const Exercise = require('../models/exercise');
+const Payout = require('../models/payout');
 const ErrorCode = require('../utilities/errors');
 
 let buyListDBProvider = require("../db_services/payout-db-service");
 let uuid = require('uuid').v4;
 
 
-module.exports = class ExerciseService {
+module.exports = class PayoutService {
 
     constructor(db_provider = null) {
         this.db_provider = db_provider || new buyListDBProvider();
     }
 
-    async createExercise(exercise) {
-        let method_name = 'ExerciseService/createExercise';
+    async createPayout(payout) {
+        let method_name = 'PayoutService/createPayout';
         logger.info(`${method_name} - start`);
         try {
-            logger.verbose(`${method_name} - parameter - buy_list - ${exercise}`);
-            exercise.id = uuid();
-            exercise.create_at = new Date().getTime();
-            logger.verbose(`${method_name} - parameter - buy_list - ${exercise}`);
-            logger.verbose(`${method_name} - calling buyListDBProvider/createBuyList`);
-            exercise = await this.db_provider.createExercise(exercise);
+            logger.verbose(`${method_name} - parameter - payout - ${payout}`);
+            payout.id = uuid();
+            payout.create_at = new Date().getTime();
+            logger.verbose(`${method_name} - parameter - payout - ${payout}`);
+            logger.verbose(`${method_name} - calling buyListDBProvider/createPayout`);
+            payout = await this.db_provider.createExercise(payout);
             logger.info(`${method_name} - end`);
-            return Promise.resolve(exercise);
+            return Promise.resolve(payout);
         } catch (err) {
-            logger.error(`${method_name} - error Fails to create buy_list ${err}`);
+            logger.error(`${method_name} - error Fails to create payout ${err}`);
             return Promise.reject(err);
         }
     }
 
-    async updateExercise(exercise) {
-        let method_name = 'ExerciseService/updateExercise';
+    async updatePayout(payout) {
+        let method_name = 'PayoutService/updatePayout';
         logger.info(`${method_name} - start`);
         try {
-            logger.verbose(`${method_name} - parameter - buy_list - ${exercise}`);
-            logger.verbose(`${method_name} - calling buyListDBProvider/createExercise`);
-            let buy_list_updated = await this.db_provider.updateExercise(exercise);
+            logger.verbose(`${method_name} - parameter - payout - ${payout}`);
+            logger.verbose(`${method_name} - calling payoutDBProvider/updatePayout`);
+            let payout_updated = await this.db_provider.updatePayout(payout);
             logger.info(`${method_name} - end`);
-            return Promise.resolve(buy_list_updated);
+            return Promise.resolve(payout_updated);
         } catch (err) {
-            logger.error(`${method_name} - error Fails to create buy_list ${err}`);
+            logger.error(`${method_name} - error Fails to create payout ${err}`);
             return Promise.reject(err);
         }
     }
 
-    async getById(exercise_id) {
-        let method_name = 'ExerciseService/getById';
+    async getById(payout) {
+        let method_name = 'PayoutService/getById';
         logger.info(`${method_name} - start`);
         try {
-            logger.verbose(`${method_name} - parameter - buy_list_id - ${exercise_id}`);
-            logger.verbose(`${method_name} - calling buyListDBProvider/getExerciseById`);
-            let buy_list = await this.db_provider.getExerciseById(exercise_id);
+            logger.verbose(`${method_name} - parameter - payout - ${payout}`);
+            logger.verbose(`${method_name} - calling PayoutDBProvider/getPayoutById`);
+            let buy_list = await this.db_provider.getPayoutById(payout);
             logger.info(`${method_name} - end`);
             return buy_list;
         } catch (err) {
@@ -59,12 +59,12 @@ module.exports = class ExerciseService {
         }
     }
 
-    async deleteExercise(exercise_id) {
-        let method_name = 'ExerciseService/deleteExercise';
+    async deletePayout(exercise_id) {
+        let method_name = 'PayoutService/deletePayout';
         logger.info(`${method_name} - start`);
         try {
             logger.verbose(`${method_name} - parameter - buy_list_id - ${exercise_id}`);
-            logger.verbose(`${method_name} - calling buyListDBProvider/deleteExercise`);
+            logger.verbose(`${method_name} - calling PayoutDBProvider/deletePayout`);
             let buy_list = await this.db_provider.deleteExercise(exercise_id);
             logger.info(`${method_name} - end`);
             return buy_list;
@@ -74,12 +74,12 @@ module.exports = class ExerciseService {
         }
     }
 
-    async getListExercise(search_by, order_by, page_number, page_size) {
-        let method_name = 'ExerciseService/createExercise';
+    async getListPayout(search_by, order_by, page_number, page_size) {
+        let method_name = 'PayoutService/createPayout';
         logger.info(`${method_name} - start`);
         try {
             //logger.verbose(`${method_name} - parameter - buy_list - ${search_by, order_by, page_number, page_size}`);
-            logger.verbose(`${method_name} - calling buyListDBProvider/getListOfExercise`);
+            logger.verbose(`${method_name} - calling buyListDBProvider/getListOfPayout`);
             let buy_lists = await this.db_provider.getList(search_by, order_by, page_number, page_size);
 
             logger.info(`${method_name} - end`);
@@ -90,13 +90,13 @@ module.exports = class ExerciseService {
         }
     }
 
-    static async validateExercises(exercises_list) {
-        let method_name = 'ExerciseService/validateExercises';
+    static async validatePayouts(exercises_list) {
+        let method_name = 'PayoutService/validatePayout';
         logger.info(`${method_name} - start`);
         try {
             let error = null;
             let error_arr = await Promise.all(exercises_list.map(async (exercise) => {
-                return ExerciseService.validateExercise(exercise)
+                return PayoutService.validatePayout(exercise)
             }));
             error_arr = error_arr.filter(err => err !=null);
             if (error_arr.length) {
@@ -111,11 +111,11 @@ module.exports = class ExerciseService {
         }
     }
 
-    static async validateExercise(exercise) {
-        let method_name = 'ExerciseService/validateExercise';
+    static async validatePayout(exercise) {
+        let method_name = 'PayoutService/validatePayout';
         logger.info(`${method_name} - start`);
         try {
-            const exercise_service = new ExerciseService();
+            const exercise_service = new PayoutService();
             let error = null;
             if (!exercise) {
                 error = ErrorCode.ERROR_EMPTY_EXERCISE;
@@ -143,7 +143,7 @@ module.exports = class ExerciseService {
             logger.info(`${method_name} - end ${error}`);
             return Promise.resolve(error);
         } catch (err) {
-            logger.error(`${method_name} - error Fails in validateExercise ${err}`);
+            logger.error(`${method_name} - error Fails in validatePayout ${err}`);
             return Promise.reject(err);
         }
     }

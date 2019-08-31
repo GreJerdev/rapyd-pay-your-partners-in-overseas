@@ -2,41 +2,41 @@
 
 const express = require('express'),
   router = express.Router();
-const ExerciseService = require('../services/payout-service');
+const PayoutService = require('../services/payout-service');
 
 router.post('/', async (req, res) => {
   try {
-    logger.info("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise = req.body;
-    exercise = await exercise_service.create_exercise(exercise);
-    res.done(exercise);
+    logger.info("payout get ")
+    let payout_service = new PayoutService();
+    let payout = req.body;
+    payout = await payout_service.create_payout(payout);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 });
 
-router.get('/:exercise_id', async (req, res) => {
+router.get('/:payout_id', async (req, res) => {
   try {
-    logger.info("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    logger.info(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    logger.info("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    logger.info(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 })
 
-router.post('/:exercise_id', async (req, res) => {
+router.post('/:payout_id', async (req, res) => {
   try {
-    console.log("exercise get ")
-    let exercise_service = new ExerciseService();
-    req.body.id = req.params['exercise_id'];
+    console.log("payout get ")
+    let payout_service = new PayoutService();
+    req.body.id = req.params['payout_id'];
     console.log(req.body)
-    let exercise = await exercise_service.update_exercise(req.body);
-    res.done(exercise);
+    let payout = await payout_service.update_payout(req.body);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
@@ -44,65 +44,65 @@ router.post('/:exercise_id', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    console.log("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    console.log(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    console.log("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    console.log(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 });
 
-router.delete('/:exercise_id', async (req, res) => {
+router.delete('/:payout_id', async (req, res) => {
   try {
-    console.log("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    console.log(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    console.log("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    console.log(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 });
 
-router.post('/:exercise_id/addingredient', async (req, res) => {
+router.post('/:payout_id/addingredient', async (req, res) => {
   try {
-    logger.info("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    logger.info(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    logger.info("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    logger.info(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 })
 
-router.post('/:exercise_id/addinstructions', async (req, res) => {
+router.post('/:payout_id/addinstructions', async (req, res) => {
   try {
-    logger.info("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    logger.info(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    logger.info("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    logger.info(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }
 })
 
 
-router.post('/:exercise_id/addsteps', async (req, res) => {
+router.post('/:payout_id/addsteps', async (req, res) => {
   try {
-    logger.info("exercise get ")
-    let exercise_service = new ExerciseService();
-    let exercise_id = req.params['exercise_id'];
-    logger.info(exercise_id)
-    let exercise = await exercise_service.get_exercise_by_id(exercise_id);
-    res.done(exercise);
+    logger.info("payout get ")
+    let payout_service = new PayoutService();
+    let payout_id = req.params['payout_id'];
+    logger.info(payout_id)
+    let payout = await payout_service.get_payout_by_id(payout_id);
+    res.done(payout);
   } catch (err) {
     res.error(err);
   }

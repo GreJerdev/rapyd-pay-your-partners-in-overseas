@@ -9,4 +9,4 @@ const set_response_methods = function (req, res, next) {
    return next();
   }
 
-  module.exports = set_response_methods
+  module.exports = set_response_methods;

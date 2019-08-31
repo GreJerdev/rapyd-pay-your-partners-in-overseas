@@ -2,9 +2,9 @@
 
 
 let mysql_provider = null;//require('./mysql_provider');
-let configuration = require('../../configuration/config');
-const trainingMongoDBProvider = require('./mongo/payin-mongo-provider');
-const exerciseMongoDBProvider = require('./mongo/payout-mongo-provider');
+let configuration = require('../../../configuration/config');
+const payinMongoDBProvider = require('./mongo/payin-mongo-provider');
+const payoutMongoDBProvider = require('./mongo/payout-mongo-provider');
 
 module.exports = function (object_name) {
         switch (configuration.db.use) {
@@ -23,11 +23,11 @@ module.exports = function (object_name) {
             switch (object_name) {
                 case '':
                     break;
-                case 'training':
-                    return new trainingMongoDBProvider();
+                case 'payout':
+                    return new payoutMongoDBProvider();
                     break;
-                case 'exercise':
-                    return new exerciseMongoDBProvider();
+                case 'payin':
+                    return new payinMongoDBProvider();
                     break;
 
             }

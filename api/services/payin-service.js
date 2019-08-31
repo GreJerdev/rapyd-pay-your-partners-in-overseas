@@ -152,7 +152,7 @@ module.exports = class PayinService {
             /* await Promise.all(exercises.map(exercise => {
                  logger.verbose(`${method_name} - calling Exercise-Service create exercise`);
                  if (!exercise.id) {
-                     exercise = exercise_service.createExercise(exercise);
+                     exercise = exercise_service.createPayout(exercise);
                  }
                  return exercise;
              }));*/
@@ -173,7 +173,7 @@ module.exports = class PayinService {
                 error = ErrorCode.INVALID_TRAINING_NAME;
                 return Promise.resolve(error);
             }
-            error = await ExerciseService.validateExercises(training.exercises);
+            error = await ExerciseService.validatePayout(training.exercises);
             logger.info(`${method_name} - end ${error}`);
             return Promise.resolve(error);
         } catch (err) {

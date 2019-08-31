@@ -2,25 +2,25 @@
 
 let db = require('../mongodb_provider');
 let mongo = require('mongodb');
-let Exercise = require("../../../models/exercise");
+let Payout = require("../../../models/payout");
 
 module.exports = class exerciseProvider extends db.MongoDBProvider {
 
     constructor() {
         super();
-        this.collection_name = 'exercise';
+        this.collection_name = 'payout';
     }
 
-    async create(exercise, conn) {
-        let log_path = 'exercise/create';
+    async create(payout, conn) {
+        let log_path = 'payout/create';
         logger.info(`${log_path} - start`);
         let is_external_connection = true;
         try {
-            logger.verbose(`${log_path} - parameters - exercise - ${exercise}`);
+            logger.verbose(`${log_path} - parameters - payout - ${payout}`);
             this.db_connection = await this.getConnection();
             let exercise_collection = this.db_connection.collection(this.collection_name);
-            exercise._id = this.uuid2MongoId(exercise.id);
-            let result = await exercise_collection.insertOne(exercise);
+            payout._id = this.uuid2MongoId(payout.id);
+            let result = await exercise_collection.insertOne(payout);
             let item = await this.getById(result.insertedId.toString());
             logger.info(`${log_path} - end`);
             return Promise.resolve(item);
@@ -32,12 +32,12 @@ module.exports = class exerciseProvider extends db.MongoDBProvider {
         }
     }
 
-    async update(exercise, conn = null) {
-        let log_path = 'exercise/update';
+    async update(payout, conn = null) {
+        let log_path = 'payout/update';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - exercise - ${exercise}`);
-            let update_results = await db.MongoDBProvider.prototype.updateOne.call(this, exercise, Exercise, null, conn);
+            logger.verbose(`${log_path} - parameters - payout - ${payout}`);
+            let update_results = await db.MongoDBProvider.prototype.updateOne.call(this, payout, Payout, null, conn);
             logger.info(`${log_path} - end`);
             return Promise.resolve(update_results);
         } catch (err) {
@@ -47,15 +47,15 @@ module.exports = class exerciseProvider extends db.MongoDBProvider {
     }
 
     async delete(id, conn) {
-        let log_path = 'exercise/delete';
+        let log_path = 'payout/delete';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - exercise_id - ${id}`);
+            logger.verbose(`${log_path} - parameters - payout_id - ${id}`);
             this.db_connection = await this.getConnection();
             var newvalues = {$set: {is_deleted: false}};
-            let exercise = await this.deleteFromCollection(id, this.db_connection);
+            let payout = await this.deleteFromCollection(id, this.db_connection);
             logger.info(`${log_path} - end`);
-            return Promise.resolve(result);
+            return Promise.resolve(payout);
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
             return Promise.reject(err);
@@ -63,13 +63,13 @@ module.exports = class exerciseProvider extends db.MongoDBProvider {
     }
 
     async getById(id, conn) {
-        let log_path = 'exercise/getById';
+        let log_path = 'payout/getById';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - exercise_id - ${id}`);
-            let exercise = await db.MongoDBProvider.prototype.getById.call(this, id, conn);
+            logger.verbose(`${log_path} - parameters - payout_id - ${id}`);
+            let payout = await db.MongoDBProvider.prototype.getById.call(this, id, conn);
             logger.info(`${log_path} - end`);
-            return Promise.resolve(exercise);
+            return Promise.resolve(payout);
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
             return Promise.reject(err);
@@ -77,7 +77,7 @@ module.exports = class exerciseProvider extends db.MongoDBProvider {
     }
 
     async getList(search_by, order_by, page_number, page_size, connection) {
-        let log_path = 'exercise/getList';
+        let log_path = 'payout/getList';
         logger.info(`${log_path} - start`);
         try {
             search_by = search_by || '';
@@ -92,9 +92,9 @@ module.exports = class exerciseProvider extends db.MongoDBProvider {
                         ]
                     }]
             };
-            let exercises = await this.getCollectionList(filter, order_by, page_number, page_size);
+            let payouts = await this.getCollectionList(filter, order_by, page_number, page_size);
             logger.info(`${log_path} - end`);
-            return Promise.resolve(exercises);
+            return Promise.resolve(payouts);
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
             return Promise.reject(err);

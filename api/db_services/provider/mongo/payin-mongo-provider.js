@@ -2,17 +2,17 @@
 
 let db = require('../mongodb_provider');
 let mongo = require('mongodb');
-let Training = require("../../../models/training");
+let Payin = require("../../../models/payin");
 
 module.exports = class trainingProvider extends db.MongoDBProvider {
 
     constructor() {
         super();
-        this.collection_name = 'training';
+        this.collection_name = 'payin';
     }
 
     async create(training, conn = null) {
-        let log_path = 'training/create';
+        let log_path = 'payin/create';
         logger.info(`${log_path} - start`);
         let is_external_connection = true;
         try {
@@ -32,12 +32,12 @@ module.exports = class trainingProvider extends db.MongoDBProvider {
         }
     }
 
-    async update(training, conn = null) {
-        let log_path = 'training/update';
+    async update(payin, conn = null) {
+        let log_path = 'payin/update';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - training - ${training}`);
-            let update_results = await db.MongoDBProvider.prototype.updateOne.call(this, training, Training, null, conn);
+            logger.verbose(`${log_path} - parameters - payin - ${payin}`);
+            let update_results = await db.MongoDBProvider.prototype.updateOne.call(this, payin, Payin, null, conn);
             logger.info(`${log_path} - end`);
             return Promise.resolve(update_results);
         } catch (err) {
@@ -47,13 +47,13 @@ module.exports = class trainingProvider extends db.MongoDBProvider {
     }
 
     async delete(id, conn) {
-        let log_path = 'training/delete';
+        let log_path = 'payin/delete';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - training_id - ${id}`);
+            logger.verbose(`${log_path} - parameters - payin_id - ${id}`);
             this.db_connection = await this.getConnection();
             var newvalues = {$set: {is_deleted: false}};
-            let training = await this.deleteFromCollection(id, this.db_connection);
+            let payin = await this.deleteFromCollection(id, this.db_connection);
             logger.info(`${log_path} - end`);
             return Promise.resolve(result);
         } catch (err) {
@@ -63,10 +63,10 @@ module.exports = class trainingProvider extends db.MongoDBProvider {
     }
 
     async getById(id, conn) {
-        let log_path = 'training/getById';
+        let log_path = 'payin/getById';
         logger.info(`${log_path} - start`);
         try {
-            logger.verbose(`${log_path} - parameters - training_id - ${id}`);
+            logger.verbose(`${log_path} - parameters - payin_id - ${id}`);
             let training = await db.MongoDBProvider.prototype.getById.call(this, id, conn);
             logger.info(`${log_path} - end`);
             return Promise.resolve(training);
@@ -77,7 +77,7 @@ module.exports = class trainingProvider extends db.MongoDBProvider {
     }
 
     async getList(search_by, order_by, page_number, page_size, connection) {
-        let log_path = 'training/getList';
+        let log_path = 'payin/getList';
         logger.info(`${log_path} - start`);
         try {
             search_by = search_by || '';
@@ -92,9 +92,9 @@ module.exports = class trainingProvider extends db.MongoDBProvider {
                         ]
                     }]
             };
-            let trainings = await this.getCollectionList(filter, order_by, page_number, page_size);
+            let payins = await this.getCollectionList(filter, order_by, page_number, page_size);
             logger.info(`${log_path} - end`);
-            return Promise.resolve(training);
+            return Promise.resolve(payins);
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
             return Promise.reject(err);

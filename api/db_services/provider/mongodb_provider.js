@@ -1,4 +1,4 @@
-let configuration = require('../../configuration/config');
+let configuration = require('../../../configuration/config');
 let mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 

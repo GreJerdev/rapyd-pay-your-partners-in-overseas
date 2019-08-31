@@ -2,7 +2,7 @@
 
 let ERROR = require('../utilities/errors');
 let provider_factory = require('./provider/datebase-provider-factory');
-let ExerciseModel = require('../models/exercise');
+let PayoutModel = require('../models/payout');
 
 module.exports = class ExerciseProvider {
 
@@ -11,12 +11,12 @@ module.exports = class ExerciseProvider {
     }
 
     async createExercise(exercise, conn) {
-        let log_path = 'ExerciseProvider/createExercise -';
+        let log_path = 'ExerciseProvider/createPayout -';
         let is_external_connection = true;
         try {
             let result = await this.db_connection.create(exercise);
             logger.verbose(`${log_path} db result - ${result}`);
-            exercise = new ExerciseModel(result);
+            exercise = new PayoutModel(result);
             return Promise.resolve(exercise);
         } catch (err) {
             if (is_external_connection === false) {
@@ -27,15 +27,15 @@ module.exports = class ExerciseProvider {
         }
     }
 
-    async updateExercise(exercise, conn) {
-        let log_path = 'ExerciseProvider/updateExercise';
+    async updatePayout(exercise, conn) {
+        let log_path = 'ExerciseProvider/updatePayout';
         let is_external_connection = false;
         try {
             if (!conn) {
 
             }
             let result = await this.db_connection.update(buy_list, conn);
-            return Promise.resolve(new ExerciseModel(result));
+            return Promise.resolve(new PayoutModel(result));
         } catch (err) {
             logger.error(`${log_path} error - ${err}`);
             return Promise.reject(err);
@@ -57,17 +57,17 @@ module.exports = class ExerciseProvider {
         }
     }
 
-    async getExerciseById(exercise_id, conn) {
-        let log_path = 'ExerciseProvider/getExerciseById';
+    async getPayoutById(payout, conn) {
+        let log_path = 'ExerciseProvider/getPayoutById';
         let exercise = new Exercise();
 
         try {
-            let result = await this.db_connection.getById(exercise_id);
+            let result = await this.db_connection.getById(payout);
             if (result) {
-                let exercise = new Exercise(result);
-                return Promise.resolve(exercise);
+                let payout = new Exercise(result);
+                return Promise.resolve(payout);
             } else {
-                logger.error(`${log_path} error - ${buy_list_id} not found`);
+                logger.error(`${log_path} error - ${payout} not found`);
                 return Promise.reject(ERROR.ERROR_EXERCISE_NOT_FOUND);
             }
         } catch (err) {
@@ -76,8 +76,8 @@ module.exports = class ExerciseProvider {
         }
     }
 
-    async getExerciseList(search_by, order_by, page_number, page_size, limit, conn) {
-        let log_path = 'exercise-provider/getExerciseList';
+    async getPayoutList(search_by, order_by, page_number, page_size, limit, conn) {
+        let log_path = 'exercise-provider/getPayoutList';
         try {
             let result = await this.db_connection.getList(search_by, order_by, page_number, page_size, limit, conn);
             return Promise.resolve(result);
